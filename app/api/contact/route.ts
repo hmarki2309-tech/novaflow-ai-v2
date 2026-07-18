@@ -1,28 +1,26 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: Request) {
   try {
-    const { id } = await params;
+    const body = await request.json();
 
-    await prisma.contactMessage.delete({
-      where: {
-        id,
+    const message = await prisma.contactMessage.create({
+      data: {
+        name: body.name,
+        email: body.email,
+        subject: body.subject,
+        message: body.message,
       },
     });
 
-    return NextResponse.json({
-      success: true,
-    });
+    return NextResponse.json(message);
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
       {
-        success: false,
+        error: "Failed to create message",
       },
       {
         status: 500,
