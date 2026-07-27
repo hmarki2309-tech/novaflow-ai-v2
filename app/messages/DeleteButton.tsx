@@ -6,7 +6,7 @@ export default function DeleteButton({
   id: string;
 }) {
   async function remove() {
-    if (!confirm("Delete message?")) return;
+    if (!confirm("Delete this message?")) return;
 
     await fetch(`/api/contact/${id}`, {
       method: "DELETE",
