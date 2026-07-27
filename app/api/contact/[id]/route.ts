@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   request: Request,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await context.params;
+    const { id } = await params;
 
     await prisma.contactMessage.delete({
       where: {
@@ -14,19 +14,13 @@ export async function DELETE(
       },
     });
 
-    return NextResponse.json({
-      success: true,
-    });
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
-      {
-        success: false,
-      },
-      {
-        status: 500,
-      }
+      { success: false },
+      { status: 500 }
     );
   }
 }

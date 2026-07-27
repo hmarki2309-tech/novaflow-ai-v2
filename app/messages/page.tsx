@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import DeleteButton from "./DeleteButton";
 
 export default async function MessagesPage() {
   const messages = await prisma.contactMessage.findMany({
@@ -15,11 +16,12 @@ export default async function MessagesPage() {
         <table className="w-full">
           <thead className="bg-[#111]">
             <tr>
-              <th className="p-4 text-left">Name</th>
-              <th className="p-4 text-left">Email</th>
-              <th className="p-4 text-left">Subject</th>
-              <th className="p-4 text-left">Message</th>
-              <th className="p-4 text-left">Date</th>
+              <th className="p-4">Name</th>
+              <th className="p-4">Email</th>
+              <th className="p-4">Subject</th>
+              <th className="p-4">Message</th>
+              <th className="p-4">Date</th>
+              <th className="p-4">Action</th>
             </tr>
           </thead>
 
@@ -35,6 +37,10 @@ export default async function MessagesPage() {
                 <td className="p-4">{m.message}</td>
                 <td className="p-4">
                   {new Date(m.createdAt).toLocaleString()}
+                </td>
+
+                <td className="p-4">
+                  <DeleteButton id={m.id} />
                 </td>
               </tr>
             ))}
