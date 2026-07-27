@@ -17,9 +17,11 @@ export async function POST(request: Request) {
       },
     });
 
+    console.log("Saved to DB:", message);
+
     await resend.emails.send({
       from: "NovaFlow <onboarding@resend.dev>",
-      to: "hmarki2309@gmail.com", 
+      to: "hmarki2309@gmail.com",
       subject: `New Contact: ${body.subject}`,
       html: `
         <h2>New Contact Message</h2>
